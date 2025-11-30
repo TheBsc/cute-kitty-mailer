@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐱 Cute Kitty Mailer - Daily Greetings with Jazz!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 20px;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 968px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .feature-icon {
+            font-size: 36px;
+            margin-right: 15px;
+        }
+
+        .feature-text h3 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .feature-text p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .schedule {
+            background: linear-gradient(135deg, #FFE5B4 0%, #ffffff 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .schedule-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .schedule-time {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+            margin-right: 15px;
+        }
+
+        .schedule-info {
+            flex: 1;
+        }
+
+        .schedule-info h4 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .schedule-info p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .subscriber-count {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .subscriber-count h3 {
+            font-size: 48px;
+            margin-bottom: 5px;
+        }
+
+        .subscriber-count p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .test-section {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .test-section h3 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+
+        .test-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .test-controls input {
+            flex: 1;
+        }
+
+        .test-controls select {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .btn-test {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .subscriber-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+
+        .subscriber-item {
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .subscriber-info {
+            font-size: 14px;
+        }
+
+        .subscriber-info strong {
+            color: #667eea;
+        }
+
+        .api-demo {
+            background: #e7f3ff;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            border-left: 4px solid #2196F3;
+        }
+
+        .api-demo h3 {
+            color: #0d47a1;
+            margin-bottom: 15px;
+        }
+
+        .api-demo p {
+            color: #1565c0;
+            margin-bottom: 10px;
+        }
+
+        .api-demo code {
+            background: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #d32f2f;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🐱 Cute Kitty Mailer 🐱</h1>
+            <p>Get adorable cat pictures with relaxing jazz music - 3 times a day!</p>
+        </div>
+
+        <div class="main-content">
+            <div class="card">
+                <h2>📧 Subscribe Now!</h2>
+                <form id="subscribeForm">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Your Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <button type="submit" class="btn">🎉 Subscribe for Cute Kitties!</button>
+                </form>
+                <div id="subscribeMessage" class="message"></div>
+
+                <div class="features-list" style="margin-top: 30px;">
+                    <div class="feature">
+                        <div class="feature-icon">🌅</div>
+                        <div class="feature-text">
+                            <h3>Morning Greeting</h3>
+                            <p>Start your day with a cute cat at 8:00 AM</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🌤️</div>
+                        <div class="feature-text">
+                            <h3>Afternoon Break</h3>
+                            <p>Relax at 2:00 PM with an adorable kitty</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🌙</div>
+                        <div class="feature-text">
+                            <h3>Evening Wind-Down</h3>
+                            <p>Unwind at 8:00 PM with cozy cats and jazz</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="api-demo">
+                    <h3>🚀 API Integration Demo</h3>
+                    <p><strong>Cat Images:</strong> Using <code>cataas.com</code> API</p>
+                    <p>Each email gets a fresh random cat picture from the Cat as a Service API!</p>
+                    <p><strong>Jazz Music:</strong> Curated YouTube playlists</p>
+                    <p>Different relaxing jazz for morning, afternoon, and evening.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>📅 Delivery Schedule</h2>
+                <div class="schedule">
+                    <div class="schedule-item">
+                        <div class="schedule-time">8:00 AM</div>
+                        <div class="schedule-info">
+                            <h4>☀️ Good Morning!</h4>
+                            <p>Wake up to a cute cat and morning jazz</p>
+                        </div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-time">2:00 PM</div>
+                        <div class="schedule-info">
+                            <h4>🌞 Good Afternoon!</h4>
+                            <p>Midday break with a sweet kitty</p>
+                        </div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-time">8:00 PM</div>
+                        <div class="schedule-info">
+                            <h4>✨ Good Evening!</h4>
+                            <p>Relax in the evening with cozy cats</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subscriber-count">
+                    <h3 id="subscriberCount"><%= subscribers.length %></h3>
+                    <p>Happy Subscribers Receiving Daily Kitties! 🎉</p>
+                </div>
+
+                <div class="test-section">
+                    <h3>🧪 Test the Mailer - Send Now!</h3>
+                    <p style="color: #856404; margin-bottom: 15px;">Send a test email to your inbox immediately to see the cute cat and API in action!</p>
+                    <div class="test-controls">
+                        <input type="email" id="testEmail" placeholder="Your email for testing">
+                        <select id="testTimeOfDay">
+                            <option value="morning">Morning</option>
+                            <option value="afternoon">Afternoon</option>
+                            <option value="evening">Evening</option>
+                        </select>
+                    </div>
+                    <button onclick="sendTestEmail()" class="btn btn-test">📬 Send Test Email Now!</button>
+                    <div id="testMessage" class="message"></div>
+                </div>
+            </div>
+        </div>
+
+        <% if (subscribers.length > 0) { %>
+        <div class="card" style="margin-top: 30px;">
+            <h2>👥 Current Subscribers</h2>
+            <div class="subscriber-list">
+                <% subscribers.forEach(sub => { %>
+                <div class="subscriber-item">
+                    <div class="subscriber-info">
+                        <strong><%= sub.name %></strong> - <%= sub.email %>
+                    </div>
+                    <button onclick="unsubscribe('<%= sub.email %>')" class="btn" style="width: auto; padding: 8px 16px; font-size: 14px; background: #dc3545;">
+                        Unsubscribe
+                    </button>
+                </div>
+                <% }); %>
+            </div>
+        </div>
+        <% } %>
+    </div>
+
+    <script>
+        document.getElementById('subscribeForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const messageDiv = document.getElementById('subscribeMessage');
+            
+            try {
+                const response = await fetch('/subscribe', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, email })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    messageDiv.className = 'message success';
+                    messageDiv.textContent = '✅ ' + data.message;
+                    messageDiv.style.display = 'block';
+                    document.getElementById('subscribeForm').reset();
+                    setTimeout(() => location.reload(), 1500);
+                } else {
+                    messageDiv.className = 'message error';
+                    messageDiv.textContent = '❌ ' + data.error;
+                    messageDiv.style.display = 'block';
+                }
+            } catch (error) {
+                messageDiv.className = 'message error';
+                messageDiv.textContent = '❌ Error: ' + error.message;
+                messageDiv.style.display = 'block';
+            }
+        });
+
+        async function sendTestEmail() {
+            const email = document.getElementById('testEmail').value;
+            const timeOfDay = document.getElementById('testTimeOfDay').value;
+            const messageDiv = document.getElementById('testMessage');
+            
+            if (!email) {
+                messageDiv.className = 'message error';
+                messageDiv.textContent = '❌ Please enter an email address';
+                messageDiv.style.display = 'block';
+                return;
+            }
+            
+            try {
+                messageDiv.className = 'message';
+                messageDiv.textContent = '⏳ Sending email...';
+                messageDiv.style.display = 'block';
+                messageDiv.style.background = '#cce5ff';
+                messageDiv.style.color = '#004085';
+                
+                const response = await fetch('/send-test', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, timeOfDay })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    messageDiv.className = 'message success';
+                    messageDiv.textContent = '✅ Test email sent! Check your inbox (and spam folder). You should see a cute cat and jazz music link!';
+                    messageDiv.style.display = 'block';
+                } else {
+                    messageDiv.className = 'message error';
+                    messageDiv.textContent = '❌ ' + data.error;
+                    messageDiv.style.display = 'block';
+                }
+            } catch (error) {
+                messageDiv.className = 'message error';
+                messageDiv.textContent = '❌ Error: ' + error.message;
+                messageDiv.style.display = 'block';
+            }
+        }
+
+        async function unsubscribe(email) {
+            if (!confirm('Are you sure you want to unsubscribe this email?')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch('/unsubscribe', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email })
+                });
+                
+                if (response.ok) {
+                    location.reload();
+                }
+            } catch (error) {
+                alert('Error unsubscribing: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>
